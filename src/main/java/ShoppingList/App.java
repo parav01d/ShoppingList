@@ -5,104 +5,70 @@ package ShoppingList;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
-
     public static void main(String[] args) {
-        System.out.println("Loading ...");
+        Category vegetables = Category.builder().setId(1).setName("Vegetables").build();
+        Category bakery = Category.builder().setId(2).setName("Bakery").build();
+        Category meat = Category.builder().setId(3).setName("Meat").build();
+        Category others = Category.builder().setId(4).setName("Others").build();
 
-        // Generate Categories
-        System.out.println("Generate Categories");
-        Category vegetables = new Category(1, "Vegetables");
-        Category bakery = new Category(2, "Bakery");
-        Category meat = new Category(3, "Meat");
-        Category others = new Category(4, "Others");
-
-        HashMap categories = new HashMap();
+        HashMap<Integer, Category> categories = new HashMap();
         categories.put(vegetables.getId(), vegetables);
         categories.put(bakery.getId(), bakery);
         categories.put(meat.getId(), meat);
         categories.put(others.getId(), others);
 
-        // Generate Stores and attach Categories in correct order
-        System.out.println("Generate Stores and attach Categories in correct order");
-
         Store edeka = new Store(1, "Edeka", Arrays.asList(vegetables, bakery, meat));
         Store rewe = new Store(2, "Rewe", Arrays.asList(bakery, meat, vegetables));
         Store lidl = new Store(3, "Lidl", Arrays.asList(vegetables, meat, bakery));
 
-        HashMap stores = new HashMap();
+        HashMap<Integer, Store> stores = new HashMap();
         stores.put(edeka.getId(), edeka);
         stores.put(rewe.getId(), rewe);
         stores.put(lidl.getId(), lidl);
 
-        // Generate ShoppingList
-        System.out.println("Generate ShoppingList");
+        InputReader inputReader = new InputReader();
+        OutputWriter outputWriter = new OutputWriter();
+        ShoppingList shoppingList = new ShoppingList();
 
-        // Wait for Input ( Products and select Category )
-          Scanner scanner = new Scanner(System.in);
-          ShoppingList shoppingList = new ShoppingList();
+        while(true) {
+          outputWriter.print("Enter the product name:");
+          String productName = inputReader.readText();
 
-          while(true) {
-            // string input product name
-            System.out.print("Enter the product name: \n");
-            String productName = scanner.next();
-            // select id from category
-            System.out.print("Select category (1-" + categories.size() +"): \n");
-            Iterator categoryIterator = categories.keySet().iterator();
-            while (categoryIterator.hasNext()) {
-              int key = (int)categoryIterator.next();
-              System.out.print("[" + key + "] " + ((Category)categories.get(key)).getName() + "\n");
-            }
-            int categoryId = scanner.nextInt();
-            // select number amount
-            System.out.print("Select amount: \n");
-            int amount = scanner.nextInt();
+          outputWriter.print("Select category (1-" + categories.size() +"):");
+          outputWriter.printCategories(categories);
+          int categoryId = inputReader.readNumber(1, categories.size());
 
-            Product product = new Product(productName, categoryId, amount);
-            shoppingList.addProduct(product);
+          outputWriter.print("Select amount:");
+          int amount = inputReader.readNumber();
 
-            // ask for loop
-            System.out.print("Do you want to add an additional Product? \n");
-            System.out.print("[Y]es \n");
-            System.out.print("[n]o \n");
-            String answer = scanner.next();
-            if(answer.equals("n")) {
-              break;
-            }
+          shoppingList.addProduct(
+            Product.builder()
+              .setName(productName)
+              .setCategoryId(categoryId)
+              .setAmount(amount)
+              .build()
+          );
+
+          outputWriter.print("Do you want to add an additional Product?");
+          outputWriter.print("[Y]es");
+          outputWriter.print("[n]o");
+
+          String answer = inputReader.readText();
+          if(answer.equals("n")) {
+            break;
           }
+        }
 
-        // Wait for Input ( Store )
-          // select id from Store
-          System.out.print("Select Store (1-" + stores.size() +"): \n");
-          Iterator storeIterator = stores.keySet().iterator();
-          while (storeIterator.hasNext()) {
-            int key = (int)storeIterator.next();
-            System.out.print("[" + key + "] " + ((Store)stores.get(key)).getName() + "\n");
-          }
-          int storeId = scanner.nextInt();
+        outputWriter.print("Select Store (1-" + stores.size() +"):");
+        outputWriter.printStores(stores);
+        int storeId = inputReader.readNumber(1, stores.size());
 
-          Store selectedStore = (Store)stores.get(storeId);
-          System.out.println("------------------------------");
-          for( Category category: selectedStore.getCategories() ) {
-	            System.out.println(category.getName());
-              for( Product product: shoppingList.getList()) {
-                if(product.getCategoryId() == category.getId()) {
-                  System.out.println(product.getAmount() + "x " + product.getName());
-                }
-              }
-              System.out.println("------------------------------");
-          }
+        Store selectedStore = (Store)stores.get(storeId);
+        outputWriter.print(selectedStore, shoppingList);
 
-          scanner.close();
-        // Plot ShoppingList in correct Order depending on Store
-
-
+        inputReader.close();
     }
 }

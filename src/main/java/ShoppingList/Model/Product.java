@@ -5,6 +5,10 @@ public class Product {
   private int _categoryId;
   private int _amount;
 
+  public static ProductBuilder builder() {
+    return new ProductBuilder();
+  }
+
   public Product(String name, int categoryId, int amount) {
     _name = name;
     _categoryId = categoryId;
