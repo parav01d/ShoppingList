@@ -1,5 +1,10 @@
 package ShoppingList;
 
+/**
+  * Model
+  * ---------------
+  * 
+  **/
 public class Category {
   private int _id;
   private String _name;

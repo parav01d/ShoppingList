@@ -7,6 +7,10 @@ public class Store {
   private String _name;
   private List<Category> _categories;
 
+  public static StoreBuilder builder() {
+    return new StoreBuilder();
+  }
+
   public Store(int id, String name, List<Category> categories) {
     _id = id;
     _name = name;
