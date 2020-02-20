@@ -8,29 +8,40 @@ public class InputReader {
 
   public String readText() {
     try {
-      return _scanner.next();
+      String text = _scanner.next();
+      _scanner.nextLine();
+      return text;
     } catch(Exception e) {
-      System.out.println(e);
       System.out.println("Input should be a Text");
-      return this.readText();
+      _scanner.nextLine();
+      return readText();
     }
   }
 
   public int readNumber() {
     try {
-      return _scanner.nextInt();
+      int number = _scanner.nextInt();
+      _scanner.nextLine();
+      return number;
     } catch(Exception e) {
       System.out.println("Input should be a Number");
-      return this.readNumber();
+      _scanner.nextLine();
+      return readNumber();
     }
   }
 
   public int readNumber(int min, int max) {
     try {
-      return _scanner.nextInt();
+      int number = _scanner.nextInt();
+      if(number < min || number > max) {
+        throw new IllegalArgumentException();
+      }
+      _scanner.nextLine();
+      return number;
     } catch(Exception e) {
       System.out.println("Input should be a Number between " + min + " and " + max);
-      return this.readNumber();
+      _scanner.nextLine();
+      return readNumber(min, max);
     }
   }
 
