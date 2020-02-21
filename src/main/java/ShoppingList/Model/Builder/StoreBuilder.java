@@ -10,6 +10,10 @@ import java.util.List;
   * The intent of the Builder design pattern is to separate the construction
   * of a complex object from its representation.
   * It is one of the Gang of Four design patterns.
+  *
+  * Returning "this" in the setters makes it possible to chain functions,
+  * this is called "fluent interface"
+  *
   **/
 public class StoreBuilder {
   private int _id;

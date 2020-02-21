@@ -3,7 +3,8 @@ package ShoppingList;
 /**
   * Model
   * ---------------
-  * 
+  * Representation of the Entities occurring in the application,
+  * the static factory method is returning a builder.
   **/
 public class Category {
   private int _id;

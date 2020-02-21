@@ -2,6 +2,13 @@ package ShoppingList;
 
 import java.util.Scanner;
 
+/**
+  * Service
+  * ---------------
+  * Service implementations helps to sperating business logic depending on thier concern
+  * and ensure singe responsibility for the single parts of application.
+  * 
+  **/
 public class InputReader {
 
   private Scanner _scanner = new Scanner(System.in);

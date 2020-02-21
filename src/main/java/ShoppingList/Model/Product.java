@@ -1,5 +1,11 @@
 package ShoppingList;
 
+/**
+  * Model
+  * ---------------
+  * Representation of the Entities occurring in the application,
+  * the static factory method is returning a builder.
+  **/
 public class Product {
   private String _name;
   private int _categoryId;

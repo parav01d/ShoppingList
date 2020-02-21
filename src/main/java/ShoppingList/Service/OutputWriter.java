@@ -4,6 +4,13 @@ import java.util.Scanner;
 import java.util.Iterator;
 import java.util.HashMap;
 
+/**
+  * Service
+  * ---------------
+  * Service implementations helps to sperating business logic depending on thier concern
+  * and ensure singe responsibility for the single parts of application.
+  *
+  **/
 public class OutputWriter {
 
   private Scanner _scanner;

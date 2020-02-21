@@ -2,6 +2,12 @@ package ShoppingList;
 
 import java.util.List;
 
+/**
+  * Model
+  * ---------------
+  * Representation of the Entities occurring in the application,
+  * the static factory method is returning a builder.
+  **/
 public class Store {
   private int _id;
   private String _name;
